@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using iTunesLib;
@@ -23,6 +24,9 @@ namespace ItunesLauncher
                 SavePlayLists(ItuneApp, newPath);
                 return;
             }
+            var ituneProcesses = Process.GetProcessesByName("iTunes");
+            var iTunesProcess = ituneProcesses[0];
+            iTunesProcess.PriorityClass = ProcessPriorityClass.AboveNormal;
             var sources = ItuneApp.Sources;
             var playlists = sources.ItemByName["Library"].Playlists;
             var playlistName = args.Length > 0 ? args[0] : "...";
